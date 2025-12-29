@@ -1,0 +1,32 @@
+<!-- I want to review in Japanese. -->
+## 🎫 issue
+
+close <ISSUE_NUMBER>
+
+## 👀 動作検証結果
+
+-
+
+## ⚠️ ユーザ影響度
+
+- [ ] High (例: ユーザーインターフェースの大幅な変更、データ構造の変更)
+- [ ] Mid (例: 新機能の追加、既存機能の改善)
+- [ ] Low (例: バグ修正、パフォーマンス改善、ドキュメント更新)
+
+## ✅ PR 前のチェック項目
+
+- [ ] PR のタイトルに「どのツールの」「なんの機能が」「どうなるか」が分かるように書いた
+- [ ] テストコードを書いた or すでにある or 不要なほど軽微
+- [ ] 動作検証をした
+
+<!-- for GitHub Copilot review rule -->
+<!--
+レビューする際には、以下のprefix(接頭辞)をつけてください
+[must]  
+[imo] (in my opinion)  
+[nits](nitpick) 
+[ask]  
+[fyi]
+-->
+<!-- for GitHub Copilot review  rule-->
+<!-- I want to review in Japanese. -->
