@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  db:
+    container_name: library-practice-db
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: library_practice
+    ports:
+      - "25432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
