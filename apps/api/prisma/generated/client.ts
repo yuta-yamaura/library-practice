@@ -11,9 +11,12 @@
  */
 
 import * as process from 'node:process'
-import * as path from 'node:path'
-import { fileURLToPath } from 'node:url'
-globalThis['__dirname'] = path.dirname(fileURLToPath(import.meta.url))
+// NOTE:
+// This project currently builds to CommonJS (see dist output). The default Prisma generator
+// uses `import.meta.url` to emulate `__dirname` in ESM, but that breaks when the emitted JS
+// is executed as CommonJS (or when Node's module detection treats it as ESM).
+// In CommonJS, `__dirname` already exists, so we can safely use it here.
+globalThis['__dirname'] = __dirname
 
 import * as runtime from "@prisma/client/runtime/client"
 import * as $Enums from "./enums.js"
