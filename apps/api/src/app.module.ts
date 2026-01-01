@@ -7,10 +7,12 @@ import { UuidGenerator } from 'src/adapter/utils/uuidGenerator';
 import { ScryptPasswordHasher } from 'src/adapter/utils/scryptPasswordHasher';
 import { CreateUserUseCase } from 'src/application/usecases/user/createUserUseCase';
 import { ID_GENERATOR, PASSWORD_HASHER, USER_REPOSITORY } from 'src/domain/tokens';
+import { LoginController } from './adapter/controllers/login.controller';
+import { LoginUserUseCase } from 'src/application/usecases/auth/loginUserUseCase';
 
 @Module({
   imports: [],
-  controllers: [AppController, SignupController],
+  controllers: [AppController, SignupController, LoginController],
   providers: [
     AppService,
     // Bind domain interfaces (tokens) to adapter implementations
@@ -19,6 +21,7 @@ import { ID_GENERATOR, PASSWORD_HASHER, USER_REPOSITORY } from 'src/domain/token
     { provide: PASSWORD_HASHER, useClass: ScryptPasswordHasher },
     // UseCase is injectable; its constructor injects the tokens above.
     CreateUserUseCase,
+    LoginUserUseCase,
   ],
 })
 export class AppModule {}

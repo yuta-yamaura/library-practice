@@ -22,6 +22,16 @@ export class PrismaUserRepository implements UserRepositoryInterface {
       createdUser.updatedAt,
     );
   }
+
+  async findByEmail(
+    email: string,
+  ): Promise<{ id: string; email: string; password: string } | null> {
+    const user = await prisma.user.findUnique({
+      where: { email },
+      select: { id: true, email: true, password: true },
+    });
+    return user;
+  }
 }
 
 
