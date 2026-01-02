@@ -9,16 +9,23 @@ import { CreateUserUseCase } from 'src/application/usecases/user/createUserUseCa
 import { ID_GENERATOR, PASSWORD_HASHER, USER_REPOSITORY } from 'src/domain/tokens';
 import { LoginController } from './adapter/controllers/login.controller';
 import { LoginUserUseCase } from 'src/application/usecases/auth/loginUserUseCase';
+import { FindBookListController } from './adapter/controllers/bookList.controller';
+import { BOOK_REPOSITORY } from 'src/domain/tokens';
+import { PrismaBookRepository } from 'src/adapter/repositories/prismaBookRepository';
+import { FindBookListUseCase } from 'src/application/usecases/book/findBookListUseCase';
+import { FIND_BOOK_LIST_USE_CASE } from 'src/domain/tokens';
 
 @Module({
   imports: [],
-  controllers: [AppController, SignupController, LoginController],
+  controllers: [AppController, SignupController, LoginController, FindBookListController],
   providers: [
     AppService,
     // Bind domain interfaces (tokens) to adapter implementations
     { provide: USER_REPOSITORY, useClass: PrismaUserRepository },
     { provide: ID_GENERATOR, useClass: UuidGenerator },
     { provide: PASSWORD_HASHER, useClass: ScryptPasswordHasher },
+    { provide: BOOK_REPOSITORY, useClass: PrismaBookRepository },
+    { provide: FIND_BOOK_LIST_USE_CASE, useClass: FindBookListUseCase },
     // UseCase is injectable; its constructor injects the tokens above.
     CreateUserUseCase,
     LoginUserUseCase,
