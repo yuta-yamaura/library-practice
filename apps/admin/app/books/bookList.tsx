@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 type Book = {
@@ -88,23 +89,34 @@ export function BookList() {
 
       <ul className="divide-y divide-black/10 overflow-hidden rounded-xl border border-black/10 bg-white dark:divide-white/10 dark:border-white/10 dark:bg-zinc-950">
         {books.map((b) => (
-          <li key={b.id} className="flex items-center justify-between px-4 py-3">
-            <div className="min-w-0">
-              <div className="truncate text-sm font-medium">{b.title}</div>
-              <div className="mt-1 truncate text-xs text-zinc-600 dark:text-zinc-400">
-                id: <span className="font-mono">{b.id}</span>
-              </div>
-            </div>
-            <span
-              className={[
-                "ml-4 inline-flex shrink-0 items-center rounded-full px-2 py-1 text-xs font-medium",
-                b.isAvailable
-                  ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-200"
-                  : "bg-zinc-500/10 text-zinc-700 dark:text-zinc-200",
-              ].join(" ")}
+          <li key={b.id}>
+            <Link
+              href={`/books/${b.id}`}
+              className="flex items-center justify-between px-4 py-3 transition hover:bg-black/3 dark:hover:bg-white/3"
             >
-              {b.isAvailable ? "Available" : "Unavailable"}
-            </span>
+              <div className="min-w-0">
+                <div className="truncate text-sm font-medium">{b.title}</div>
+                <div className="mt-1 truncate text-xs text-zinc-600 dark:text-zinc-400">
+                  id: <span className="font-mono">{b.id}</span>
+                </div>
+              </div>
+
+              <div className="ml-4 flex items-center gap-3">
+                <span
+                  className={[
+                    "inline-flex shrink-0 items-center rounded-full px-2 py-1 text-xs font-medium",
+                    b.isAvailable
+                      ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-200"
+                      : "bg-zinc-500/10 text-zinc-700 dark:text-zinc-200",
+                  ].join(" ")}
+                >
+                  {b.isAvailable ? "Available" : "Unavailable"}
+                </span>
+                <span className="text-xs font-medium text-zinc-700 dark:text-zinc-300">
+                  View
+                </span>
+              </div>
+            </Link>
           </li>
         ))}
       </ul>
