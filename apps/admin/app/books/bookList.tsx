@@ -30,7 +30,7 @@ export function BookList() {
     async function load() {
       setError(null);
       try {
-        const res = await fetch(`${apiBaseUrl}/booklist`, {
+        const res = await fetch(`${apiBaseUrl}/books`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });
