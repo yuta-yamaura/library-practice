@@ -13,7 +13,8 @@ import { FindBookListController } from './adapter/controllers/bookList.controlle
 import { BOOK_REPOSITORY } from 'src/domain/tokens';
 import { PrismaBookRepository } from 'src/adapter/repositories/prismaBookRepository';
 import { FindBookListUseCase } from 'src/application/usecases/book/findBookListUseCase';
-import { FIND_BOOK_LIST_USE_CASE } from 'src/domain/tokens';
+import { FIND_BOOK_DETAIL_USE_CASE, FIND_BOOK_LIST_USE_CASE } from 'src/domain/tokens';
+import { FindBookDetailUseCase } from 'src/application/usecases/book/findBookDetailUseCase';
 
 @Module({
   imports: [],
@@ -26,6 +27,7 @@ import { FIND_BOOK_LIST_USE_CASE } from 'src/domain/tokens';
     { provide: PASSWORD_HASHER, useClass: ScryptPasswordHasher },
     { provide: BOOK_REPOSITORY, useClass: PrismaBookRepository },
     { provide: FIND_BOOK_LIST_USE_CASE, useClass: FindBookListUseCase },
+    { provide: FIND_BOOK_DETAIL_USE_CASE, useClass: FindBookDetailUseCase },
     // UseCase is injectable; its constructor injects the tokens above.
     CreateUserUseCase,
     LoginUserUseCase,
