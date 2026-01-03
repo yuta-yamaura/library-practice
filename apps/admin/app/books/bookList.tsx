@@ -82,9 +82,17 @@ export function BookList() {
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Books</h2>
-        <span className="text-xs text-zinc-600 dark:text-zinc-400">
-          {books.length} items
-        </span>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/books/new"
+            className="inline-flex h-8 items-center rounded-lg bg-zinc-900 px-3 text-xs font-medium text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-950 dark:hover:bg-white"
+          >
+            Add book
+          </Link>
+          <span className="text-xs text-zinc-600 dark:text-zinc-400">
+            {books.length} items
+          </span>
+        </div>
       </div>
 
       <ul className="divide-y divide-black/10 overflow-hidden rounded-xl border border-black/10 bg-white dark:divide-white/10 dark:border-white/10 dark:bg-zinc-950">
