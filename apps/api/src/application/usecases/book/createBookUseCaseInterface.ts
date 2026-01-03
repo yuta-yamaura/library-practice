@@ -4,7 +4,3 @@ import type { CreateBookResponseDto } from "src/application/dtos/book/createBook
 export interface CreateBookUseCaseInterface {
   execute(requestDto: CreateBookRequestDto): Promise<CreateBookResponseDto>;
 }
-
-
-
-
