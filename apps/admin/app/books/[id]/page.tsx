@@ -120,9 +120,17 @@ export default async function BookDetailPage({
                 Loan this book
               </Link>
               {!book.isAvailable ? (
-                <p className="mt-2 text-xs text-zinc-600 dark:text-zinc-400">
-                  ※ Unavailable のため貸出は推奨しません。
-                </p>
+                <div className="mt-2 space-y-2">
+                  <p className="text-xs text-zinc-600 dark:text-zinc-400">
+                    ※ Unavailable のため貸出は推奨しません。
+                  </p>
+                  <Link
+                    href="/loan/return"
+                    className="inline-flex h-10 w-full items-center justify-center rounded-lg bg-zinc-100 px-4 text-sm font-medium text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-900/40 dark:text-zinc-50 dark:hover:bg-zinc-900/60"
+                  >
+                    Return (enter loanId)
+                  </Link>
+                </div>
               ) : null}
             </div>
 
