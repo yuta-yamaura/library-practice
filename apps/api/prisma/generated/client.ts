@@ -51,3 +51,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Book = Prisma.BookModel
+/**
+ * Model Loan
+ * 
+ */
+export type Loan = Prisma.LoanModel

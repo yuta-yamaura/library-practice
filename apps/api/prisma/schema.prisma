@@ -20,12 +20,29 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  loans Loan[]
 }
 
 model Book {
-  id          String   @id @default(uuid())
+  id          String   @id @default(uuid()) @db.Uuid
   title       String
   isAvailable Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
+
+  loans Loan[]
+}
+
+model Loan {
+  id         String    @id @default(uuid()) @db.Uuid
+  bookId     String    @db.Uuid
+  userId     String    @db.Uuid
+  loanDate   DateTime
+  returnDate DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now()) @updatedAt
+
+  book Book @relation(fields: [bookId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 }
