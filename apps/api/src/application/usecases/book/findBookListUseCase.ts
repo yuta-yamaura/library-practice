@@ -1,16 +1,16 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { FindBookListUseCaseInterface } from "./findBookListUseCaseInterface";
-import type { bookRepositoryInterface } from "src/domain/repositories/bookRepositoryInterface";
+import type { FindBookListUseCaseInterface } from "./findBookListUseCaseInterface";
+import type { BookRepositoryInterface } from "src/domain/repositories/bookRepositoryInterface";
 import { BOOK_REPOSITORY } from "src/domain/tokens";
-import { FindBookRequestDto } from "src/application/dtos/book/findBookRequestDto";
-import { FindBookResponseDto } from "src/application/dtos/book/findBookResponseDto";
+import type { FindBookRequestDto } from "src/application/dtos/book/findBookRequestDto";
+import type { FindBookResponseDto } from "src/application/dtos/book/findBookResponseDto";
 
 
 @Injectable()
 export class FindBookListUseCase implements FindBookListUseCaseInterface {
     constructor(
         @Inject(BOOK_REPOSITORY)
-        private readonly bookRepository: bookRepositoryInterface
+        private readonly bookRepository: BookRepositoryInterface
     ) {}
 
     async execute(requestDto: FindBookRequestDto): Promise<FindBookResponseDto[]> {

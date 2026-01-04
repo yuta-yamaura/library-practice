@@ -1,7 +1,7 @@
 import { NotFoundException } from "@nestjs/common";
 import { prisma } from "lib/prisma";
 import { Loan } from "src/domain/entities/loan";
-import { LoanRepositoryInterface } from "src/domain/repositories/loanRepositoryInterface";
+import type { LoanRepositoryInterface } from "src/domain/repositories/loanRepositoryInterface";
 
 
 export class PrismaLoanRepository implements LoanRepositoryInterface {
@@ -28,6 +28,7 @@ export class PrismaLoanRepository implements LoanRepositoryInterface {
                     bookId: loan.bookId,
                     userId: loan.userId,
                     loanDate: loan.loanDate,
+                    returnDate: loan.returnDate ?? undefined,
                     createdAt: loan.createdAt,
                     updatedAt: loan.updatedAt
                 }
@@ -43,6 +44,82 @@ export class PrismaLoanRepository implements LoanRepositoryInterface {
             newLoan.returnDate ?? null,
             newLoan.createdAt,
             newLoan.updatedAt,
+        )
+    }
+
+    async findByLoanId(id: string): Promise<Loan> {
+        const record = await prisma.loan.findUnique({
+            where: { id },
+        })
+
+        if (!record) {
+            throw new NotFoundException('貸出が見つかりませんでした')
+        }
+
+        return new Loan(
+            record.id,
+            record.bookId,
+            record.userId,
+            record.loanDate,
+            record.returnDate ?? null,
+            record.createdAt,
+            record.updatedAt,
+        )
+    }
+
+    async returnByLoanId(id: string): Promise<Loan> {
+        const record = await prisma.$transaction(async (tx) => {
+            const loan = await tx.loan.findUnique({
+                where: { id },
+                select: {
+                    id: true,
+                    bookId: true,
+                    userId: true,
+                    loanDate: true,
+                    returnDate: true,
+                    createdAt: true,
+                    updatedAt: true,
+                },
+            })
+
+            if (!loan) {
+                throw new NotFoundException('貸出が見つかりませんでした')
+            }
+            if (loan.returnDate) {
+                throw new Error('この貸出は既に返却済みです')
+            }
+
+            const returnedAt = new Date()
+            const updatedLoan = await tx.loan.update({
+                where: { id: loan.id },
+                data: { returnDate: returnedAt },
+                select: {
+                    id: true,
+                    bookId: true,
+                    userId: true,
+                    loanDate: true,
+                    returnDate: true,
+                    createdAt: true,
+                    updatedAt: true,
+                },
+            })
+
+            await tx.book.update({
+                where: { id: updatedLoan.bookId },
+                data: { isAvailable: true },
+            })
+
+            return updatedLoan
+        })
+
+        return new Loan(
+            record.id,
+            record.bookId,
+            record.userId,
+            record.loanDate,
+            record.returnDate ?? null,
+            record.createdAt,
+            record.updatedAt,
         )
     }
 }

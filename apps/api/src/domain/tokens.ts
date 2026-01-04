@@ -9,5 +9,6 @@ export const FIND_BOOK_DETAIL_USE_CASE: InjectionToken = Symbol('FIND_BOOK_DETAI
 export const CREATE_BOOK: InjectionToken = Symbol('CREATE_BOOK')
 export const LOAN_BOOK: InjectionToken = Symbol('LOAN_BOOK')
 export const LOAN_REPOSITORY: InjectionToken = Symbol('LOAN_REPOSITORY')
+export const RETURN_BOOK: InjectionToken = Symbol('RETURN_BOOK')
 
 

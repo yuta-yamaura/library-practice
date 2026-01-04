@@ -6,7 +6,7 @@ import { PrismaUserRepository } from 'src/adapter/repositories/prismaUserReposit
 import { UuidGenerator } from 'src/adapter/utils/uuidGenerator';
 import { ScryptPasswordHasher } from 'src/adapter/utils/scryptPasswordHasher';
 import { CreateUserUseCase } from 'src/application/usecases/user/createUserUseCase';
-import { CREATE_BOOK, ID_GENERATOR, LOAN_BOOK, LOAN_REPOSITORY, PASSWORD_HASHER, USER_REPOSITORY } from 'src/domain/tokens';
+import { CREATE_BOOK, ID_GENERATOR, LOAN_BOOK, LOAN_REPOSITORY, PASSWORD_HASHER, RETURN_BOOK, USER_REPOSITORY } from 'src/domain/tokens';
 import { LoginController } from './adapter/controllers/login.controller';
 import { LoginUserUseCase } from 'src/application/usecases/auth/loginUserUseCase';
 import { FindBookListController } from './adapter/controllers/bookList.controller';
@@ -19,6 +19,7 @@ import { CreateBookUseCase } from './application/usecases/book/createBookUseCase
 import { LoanBookUseCase } from './application/usecases/loan/loanBookUseCase';
 import { PrismaLoanRepository } from './adapter/repositories/prismaLoanRepository';
 import { LoanController } from './adapter/controllers/loan.controller';
+import { ReturnBookUseCase } from './application/usecases/loan/returnBookUseCase';
 
 @Module({
   imports: [],
@@ -34,6 +35,7 @@ import { LoanController } from './adapter/controllers/loan.controller';
     { provide: FIND_BOOK_DETAIL_USE_CASE, useClass: FindBookDetailUseCase },
     { provide: CREATE_BOOK, useClass: CreateBookUseCase },
     { provide: LOAN_BOOK, useClass: LoanBookUseCase },
+    { provide: RETURN_BOOK, useClass: ReturnBookUseCase },
     { provide: LOAN_REPOSITORY, useClass: PrismaLoanRepository },
     // UseCase is injectable; its constructor injects the tokens above.
     CreateUserUseCase,
