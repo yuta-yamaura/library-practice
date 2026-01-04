@@ -15,6 +15,11 @@
     "turbo": "^2.7.2",
     "typescript": "5.9.2"
   },
+  "pnpm": {
+    "overrides": {
+      "@prisma/dev>zeptomatch": "1.0.0"
+    }
+  },
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"

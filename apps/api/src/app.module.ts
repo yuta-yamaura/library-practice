@@ -6,7 +6,7 @@ import { PrismaUserRepository } from 'src/adapter/repositories/prismaUserReposit
 import { UuidGenerator } from 'src/adapter/utils/uuidGenerator';
 import { ScryptPasswordHasher } from 'src/adapter/utils/scryptPasswordHasher';
 import { CreateUserUseCase } from 'src/application/usecases/user/createUserUseCase';
-import { CREATE_BOOK, ID_GENERATOR, PASSWORD_HASHER, USER_REPOSITORY } from 'src/domain/tokens';
+import { CREATE_BOOK, ID_GENERATOR, LOAN_BOOK, LOAN_REPOSITORY, PASSWORD_HASHER, USER_REPOSITORY } from 'src/domain/tokens';
 import { LoginController } from './adapter/controllers/login.controller';
 import { LoginUserUseCase } from 'src/application/usecases/auth/loginUserUseCase';
 import { FindBookListController } from './adapter/controllers/bookList.controller';
@@ -16,10 +16,13 @@ import { FindBookListUseCase } from 'src/application/usecases/book/findBookListU
 import { FIND_BOOK_DETAIL_USE_CASE, FIND_BOOK_LIST_USE_CASE } from 'src/domain/tokens';
 import { FindBookDetailUseCase } from 'src/application/usecases/book/findBookDetailUseCase';
 import { CreateBookUseCase } from './application/usecases/book/createBookUseCase';
+import { LoanBookUseCase } from './application/usecases/loan/loanBookUseCase';
+import { PrismaLoanRepository } from './adapter/repositories/prismaLoanRepository';
+import { LoanController } from './adapter/controllers/loan.controller';
 
 @Module({
   imports: [],
-  controllers: [AppController, SignupController, LoginController, FindBookListController],
+  controllers: [AppController, SignupController, LoginController, FindBookListController, LoanController],
   providers: [
     AppService,
     // Bind domain interfaces (tokens) to adapter implementations
@@ -30,6 +33,8 @@ import { CreateBookUseCase } from './application/usecases/book/createBookUseCase
     { provide: FIND_BOOK_LIST_USE_CASE, useClass: FindBookListUseCase },
     { provide: FIND_BOOK_DETAIL_USE_CASE, useClass: FindBookDetailUseCase },
     { provide: CREATE_BOOK, useClass: CreateBookUseCase },
+    { provide: LOAN_BOOK, useClass: LoanBookUseCase },
+    { provide: LOAN_REPOSITORY, useClass: PrismaLoanRepository },
     // UseCase is injectable; its constructor injects the tokens above.
     CreateUserUseCase,
     LoginUserUseCase,
