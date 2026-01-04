@@ -16,6 +16,7 @@ export function LoanBookForm({ defaultBookId }: { defaultBookId: string }) {
   const apiBaseUrl = useMemo(() => getApiBaseUrl(), []);
   const router = useRouter();
 
+  const [loanId, setLoanId] = useState<string | null>(null);
   const [bookId, setBookId] = useState(defaultBookId);
   const [userId, setUserId] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,6 +27,7 @@ export function LoanBookForm({ defaultBookId }: { defaultBookId: string }) {
     e.preventDefault();
     setError(null);
     setResultJson(null);
+    setLoanId(null);
 
     if (!bookId.trim()) return setError("bookId is required.");
     if (!userId.trim()) return setError("userId is required.");
@@ -52,9 +54,11 @@ export function LoanBookForm({ defaultBookId }: { defaultBookId: string }) {
         );
       }
 
-      // Backend currently may serialize Loan entity fields as `_id`, etc.
+      // Expect DTO shape: { id, bookId, userId, loanDate, createdAt, updatedAt }
+      const data = json as { id: string };
+      setLoanId(data.id);
       setResultJson(JSON.stringify(json, null, 2));
-      router.push(`/books/${encodeURIComponent(bookId)}`);
+      router.push(`/books/${encodeURIComponent(bookId)}?loanId=${encodeURIComponent(data.id)}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
@@ -109,6 +113,12 @@ export function LoanBookForm({ defaultBookId }: { defaultBookId: string }) {
         <pre className="max-h-64 overflow-auto rounded-lg border border-black/10 bg-white p-3 text-xs text-zinc-900 dark:border-white/10 dark:bg-zinc-950 dark:text-zinc-100">
           {resultJson}
         </pre>
+      ) : null}
+
+      {loanId ? (
+        <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-800 dark:text-emerald-200">
+          loanId: <span className="break-all font-mono text-xs">{loanId}</span>
+        </div>
       ) : null}
 
       <button

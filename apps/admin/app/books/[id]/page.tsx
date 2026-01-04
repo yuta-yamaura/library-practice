@@ -25,10 +25,13 @@ function formatDate(value: string) {
 
 export default async function BookDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ loanId?: string }>;
 }) {
   const { id } = await params;
+  const { loanId } = await searchParams;
   const apiBaseUrl = getApiBaseUrl();
 
   const res = await fetch(`${apiBaseUrl}/books/${encodeURIComponent(id)}`, {
@@ -80,6 +83,19 @@ export default async function BookDetailPage({
           </div>
 
           <div className="mt-4 space-y-3">
+            {loanId ? (
+              <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-800 dark:text-emerald-200">
+                Latest loanId:{" "}
+                <span className="break-all font-mono text-xs">{loanId}</span>
+                <Link
+                  href={`/loan/return?loanId=${encodeURIComponent(loanId)}`}
+                  className="mt-2 inline-flex h-9 w-full items-center justify-center rounded-lg bg-zinc-900 px-4 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-950 dark:hover:bg-white"
+                >
+                  Go to return
+                </Link>
+              </div>
+            ) : null}
+
             <div>
               <div className="text-xs text-zinc-600 dark:text-zinc-400">Title</div>
               <div className="mt-1 text-sm font-medium">{book.title}</div>
