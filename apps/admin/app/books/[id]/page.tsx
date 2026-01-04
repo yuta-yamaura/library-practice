@@ -106,6 +106,26 @@ export default async function BookDetailPage({
               </span>
             </div>
 
+            <div className="pt-1">
+              <Link
+                href={`/loan/new?bookId=${encodeURIComponent(book.id)}`}
+                aria-disabled={!book.isAvailable}
+                className={[
+                  "inline-flex h-10 w-full items-center justify-center rounded-lg px-4 text-sm font-medium",
+                  book.isAvailable
+                    ? "bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-50 dark:text-zinc-950 dark:hover:bg-white"
+                    : "cursor-not-allowed bg-zinc-900/30 text-white/70 dark:bg-zinc-50/30 dark:text-zinc-950/60",
+                ].join(" ")}
+              >
+                Loan this book
+              </Link>
+              {!book.isAvailable ? (
+                <p className="mt-2 text-xs text-zinc-600 dark:text-zinc-400">
+                  ※ Unavailable のため貸出は推奨しません。
+                </p>
+              ) : null}
+            </div>
+
             <div className="grid grid-cols-1 gap-3">
               <div>
                 <div className="text-xs text-zinc-600 dark:text-zinc-400">
